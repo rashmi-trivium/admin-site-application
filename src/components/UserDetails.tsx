@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 const UserDetails = () => {
-  let { userName } = useParams();
+  let { userId } = useParams();
   const navigate = useNavigate();
 
   let user = {
@@ -10,7 +10,7 @@ const UserDetails = () => {
   };
   return (
     <div>
-      <h1>User Details Page: {userName}</h1>
+      <h1>User Details Page: {userId}</h1>
       <div>
         User Name : {user.userName}
         <br></br>

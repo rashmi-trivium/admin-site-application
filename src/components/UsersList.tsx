@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 interface Props {
+  userId: string;
   userName: string;
   company: string;
   userType: string;
@@ -10,27 +11,31 @@ const UsersList = () => {
   const navigate = useNavigate();
 
   const goToUserDetails = (item: Props) => {
-    navigate(`/userDetails/${item.userName}`);
+    navigate(`/userDetails/${item.userId}`);
   };
 
   let clients: Props[] = [
     {
       company: "c001",
+      userId: "101",
       userName: "Tom",
       userType: "Male",
     },
     {
       company: "c002",
+      userId: "106",
       userName: "Sam",
       userType: "Male",
     },
     {
       company: "c003",
+      userId: "203",
       userName: "Ravi",
       userType: "Male",
     },
     {
       company: "c004",
+      userId: "005",
       userName: "Kaveri",
       userType: "Female",
     },

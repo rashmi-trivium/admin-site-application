@@ -18,7 +18,7 @@ const RouteConfig = () => {
         <Route path="clientsList" element={<ClientsList />} />
         <Route path="details/:id" element={<Details />} />
         <Route path="usersList" element={<UsersList />} />
-        <Route path="userDetails/:userName" element={<UserDetails />} />
+        <Route path="userDetails/:userId" element={<UserDetails />} />
         <Route path="addUser" element={<AddUser />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
