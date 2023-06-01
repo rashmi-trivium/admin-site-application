@@ -77,7 +77,7 @@ const AddClient = () => {
             Annual Salary
           </label>
           <input
-            type="text"
+            type="number"
             className="form-control"
             id="colFormLabel"
             value={annualSalary}
