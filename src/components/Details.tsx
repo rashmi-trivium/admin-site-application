@@ -20,7 +20,7 @@ const Details = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`https://localhost:44379/Admin/api/getclientlist/${id}`)
+      .get(`https://localhost:44379/Client/api/getclientlist/${id}`)
       .then((response: AxiosResponse<Props>) => {
         setClientData(response.data);
       })

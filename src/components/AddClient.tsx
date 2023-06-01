@@ -27,7 +27,7 @@ const AddClient = () => {
       dateOfBirth,
     };
     axios
-      .post("https://localhost:44379/Admin/api/addclient", client)
+      .post("https://localhost:44379/Client/api/addclient", client)
       .then((response: AxiosResponse<number>) => {
         navigate("/clientsList");
       })

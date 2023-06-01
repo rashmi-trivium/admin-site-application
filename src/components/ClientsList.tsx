@@ -22,7 +22,7 @@ const ClientsList = () => {
 
   useEffect(() => {
     axios
-      .get("https://localhost:44379/Admin/api/getclientlist")
+      .get("https://localhost:44379/Client/api/getclientlist")
       .then((response: AxiosResponse<Props[]>) => setClientList(response.data))
       .catch((error) => setErrors(error.message))
       .finally(() => setIsLoading(false));
@@ -32,7 +32,7 @@ const ClientsList = () => {
     const originalState = [...clientList];
     setClientList(clientList.filter((x) => x.clientId !== id));
     axios
-      .delete("https://localhost:44379/Admin/api/deleteclient" + id)
+      .delete("https://localhost:44379/Client/api/deleteclient" + id)
       .catch((err) => {
         setErrors(err.message);
         setClientList(originalState);
