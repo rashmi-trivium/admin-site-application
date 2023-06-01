@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 
 interface Props {
@@ -35,6 +35,9 @@ const useUser = () => {
     setUserList(userList.filter((x) => x.id !== id));
     axios
       .delete("https://localhost:44379/Admin/api/deleteuser/" + id)
+      .then((response: AxiosResponse<number>) => {
+        if (response.data) alert("Row deleted successfully!");
+      })
       .catch((err) => {
         setErrors(err.message);
         setUserList(originalState);

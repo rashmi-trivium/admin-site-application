@@ -32,7 +32,10 @@ const ClientsList = () => {
     const originalState = [...clientList];
     setClientList(clientList.filter((x) => x.clientId !== id));
     axios
-      .delete("https://localhost:44379/Client/api/deleteclient" + id)
+      .delete("https://localhost:44379/Client/api/deleteclient/" + id)
+      .then((response: AxiosResponse<number>) => {
+        if (response.data) alert("Row deleted successfully!");
+      })
       .catch((err) => {
         setErrors(err.message);
         setClientList(originalState);
