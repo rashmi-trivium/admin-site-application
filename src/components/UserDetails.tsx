@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-import useUser from "../hooks/useUser";
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 
@@ -31,6 +30,8 @@ const UserDetails = () => {
 
   return (
     <>
+      {error && <div>{error}</div>}
+      {isLoading && <div>Loading...</div>}
       {!isLoading && (
         <div className="row">
           <div className="card">

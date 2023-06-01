@@ -1,32 +1,54 @@
+import axios, { AxiosResponse } from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+
+interface Props {
+  clientId: string;
+  clientName: string;
+  gender: string;
+  annualSalary: number;
+  dateOfBirth: string;
+}
+
 const Details = () => {
   let { id } = useParams();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setErrors] = useState("");
+  const [clientData, setClientData] = useState<Props>();
 
-  let client = {
-    code: "e001",
-    name: "Tom",
-    gender: "Male",
-    annualSalary: 5500,
-    dateOfBirth: "25/6/1988",
-  };
+  useEffect(() => {
+    setIsLoading(true);
+    axios
+      .get(`https://localhost:44379/Admin/api/getclientlist/${id}`)
+      .then((response: AxiosResponse<Props>) => {
+        setClientData(response.data);
+      })
+      .catch((error) => setErrors(error.message))
+      .finally(() => setIsLoading(false));
+  }, []);
+
   return (
-    <div>
-      <h1>Client Details Page: {id}</h1>
-      <div>
-        Code : {client.code}
-        <br></br>
-        Name : {client.name}
-        <br></br>
-        gender : {client.gender}
-        <br></br>
-        annualSalary : {client.annualSalary}
-        <br></br>
-        dateOfBirth : {client.dateOfBirth}
-        <br></br>
-      </div>
-      <button onClick={() => navigate("/clientsList")}>Back to List</button>
-    </div>
+    <>
+      {error && <div>{error}</div>}
+      {isLoading && <div>Loading...</div>}
+      {!isLoading && (
+        <div>
+          <h1>Client Details Page: {clientData?.clientId}</h1>
+          <div>
+            Name : {clientData?.clientName}
+            <br></br>
+            Gender : {clientData?.gender}
+            <br></br>
+            Annual Salary : {clientData?.annualSalary}
+            <br></br>
+            Date Of Birth : {clientData?.dateOfBirth}
+            <br></br>
+          </div>
+          <button onClick={() => navigate("/clientsList")}>Back to List</button>
+        </div>
+      )}
+    </>
   );
 };
 

@@ -7,6 +7,7 @@ import Details from "./components/Details";
 import AddUser from "./components/Adduser";
 import UsersList from "./components/UsersList";
 import UserDetails from "./components/UserDetails";
+import AddClient from "./components/AddClient";
 
 const RouteConfig = () => {
   return (
@@ -16,6 +17,7 @@ const RouteConfig = () => {
         <Route path="login" element={<Login />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="clientsList" element={<ClientsList />} />
+        <Route path="addClient" element={<AddClient />} />
         <Route path="details/:id" element={<Details />} />
         <Route path="usersList" element={<UsersList />} />
         <Route path="userDetails/:userId" element={<UserDetails />} />
