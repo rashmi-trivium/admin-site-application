@@ -12,22 +12,17 @@ interface Props {
 
 const AddClient = () => {
   const navigate = useNavigate();
-
-  const [clientName, setClientName] = useState("");
-  const [gender, setGender] = useState("");
-  const [annualSalary, setAnnualSalary] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [clientData, setClientData] = useState<Props>({
+    annualSalary: "",
+    clientName: "",
+    dateOfBirth: "",
+    gender: "",
+  });
   const [error, setErrors] = useState("");
 
   const submit = () => {
-    const client: Props = {
-      clientName,
-      gender,
-      annualSalary,
-      dateOfBirth,
-    };
     axios
-      .post("https://localhost:44379/Client/api/addclient", client)
+      .post("https://localhost:44379/Client/api/addclient", clientData)
       .then((response: AxiosResponse<number>) => {
         navigate("/clientsList");
       })
@@ -36,10 +31,12 @@ const AddClient = () => {
   };
 
   const resetForm = () => {
-    setClientName("");
-    setGender("");
-    setAnnualSalary("");
-    setDateOfBirth("");
+    setClientData({
+      annualSalary: "",
+      clientName: "",
+      dateOfBirth: "",
+      gender: "",
+    });
   };
   return (
     <>
@@ -54,8 +51,10 @@ const AddClient = () => {
             type="text"
             className="form-control"
             id="colFormLabelSm"
-            value={clientName}
-            onChange={(e) => setClientName(e.target.value)}
+            value={clientData.clientName}
+            onChange={(e) =>
+              setClientData({ ...clientData, clientName: e.target.value })
+            }
           />
         </div>
 
@@ -67,8 +66,10 @@ const AddClient = () => {
             type="text"
             className="form-control"
             id="colFormLabel"
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
+            value={clientData.gender}
+            onChange={(e) =>
+              setClientData({ ...clientData, gender: e.target.value })
+            }
           />
         </div>
 
@@ -80,8 +81,10 @@ const AddClient = () => {
             type="number"
             className="form-control"
             id="colFormLabel"
-            value={annualSalary}
-            onChange={(e) => setAnnualSalary(e.target.value)}
+            value={clientData.annualSalary}
+            onChange={(e) =>
+              setClientData({ ...clientData, annualSalary: e.target.value })
+            }
           />
         </div>
 
@@ -93,8 +96,10 @@ const AddClient = () => {
             type="text"
             className="form-control"
             id="colFormLabelLg"
-            value={dateOfBirth}
-            onChange={(e) => setDateOfBirth(e.target.value)}
+            value={clientData.dateOfBirth}
+            onChange={(e) =>
+              setClientData({ ...clientData, dateOfBirth: e.target.value })
+            }
           />
         </div>
 

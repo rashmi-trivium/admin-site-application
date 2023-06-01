@@ -13,22 +13,18 @@ interface Props {
 const AddUser = () => {
   const navigate = useNavigate();
 
-  const [companyName, setCompanyName] = useState("");
-  const [companyID, setCompanyID] = useState("");
-  const [username, setUsername] = useState("");
-  const [userType, setUserType] = useState("");
+  const [userData, setUserData] = useState<Props>({
+    id: "0",
+    companyID: "",
+    companyName: "",
+    username: "",
+    userType: "",
+  });
   const [error, setErrors] = useState("");
 
   const submit = () => {
-    const user: Props = {
-      id: "0",
-      companyID,
-      companyName,
-      username,
-      userType,
-    };
     axios
-      .post("https://localhost:44379/Admin/api/adduser", user)
+      .post("https://localhost:44379/Admin/api/adduser", userData)
       .then((response: AxiosResponse<number>) => {
         navigate("/usersList");
       })
@@ -37,10 +33,13 @@ const AddUser = () => {
   };
 
   const resetForm = () => {
-    setCompanyID("");
-    setCompanyName("");
-    setUsername("");
-    setUserType("");
+    setUserData({
+      id: "0",
+      companyID: "",
+      companyName: "",
+      username: "",
+      userType: "",
+    });
   };
 
   return (
@@ -56,8 +55,10 @@ const AddUser = () => {
             type="text"
             className="form-control"
             id="colFormLabelSm"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={userData.username}
+            onChange={(e) =>
+              setUserData({ ...userData, username: e.target.value })
+            }
           />
         </div>
 
@@ -69,8 +70,10 @@ const AddUser = () => {
             type="text"
             className="form-control"
             id="colFormLabel"
-            value={companyID}
-            onChange={(e) => setCompanyID(e.target.value)}
+            value={userData.companyID}
+            onChange={(e) =>
+              setUserData({ ...userData, companyID: e.target.value })
+            }
           />
         </div>
 
@@ -82,8 +85,10 @@ const AddUser = () => {
             type="text"
             className="form-control"
             id="colFormLabel"
-            value={companyName}
-            onChange={(e) => setCompanyName(e.target.value)}
+            value={userData.companyName}
+            onChange={(e) =>
+              setUserData({ ...userData, companyName: e.target.value })
+            }
           />
         </div>
 
@@ -95,8 +100,10 @@ const AddUser = () => {
             type="text"
             className="form-control"
             id="colFormLabelLg"
-            value={userType}
-            onChange={(e) => setUserType(e.target.value)}
+            value={userData.userType}
+            onChange={(e) =>
+              setUserData({ ...userData, userType: e.target.value })
+            }
           />
         </div>
 
