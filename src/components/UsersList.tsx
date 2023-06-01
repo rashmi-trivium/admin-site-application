@@ -12,7 +12,7 @@ interface Props {
 
 const UsersList = () => {
   const navigate = useNavigate();
-  const { userList, error, isLoading, addUser, deleteUser } = useUser();
+  const { userList, error, isLoading, deleteUser } = useUser();
 
   const goToUserDetails = (item: Props) => {
     navigate(`/userDetails/${item.id}`);
@@ -65,7 +65,7 @@ const UsersList = () => {
                     >
                       Details
                     </button>
-                    <button onClick={() => deleteUser(item)}>Delete</button>
+                    <button onClick={() => deleteUser(item.id)}>Delete</button>
                   </td>
                 </tr>
               ))}
@@ -77,7 +77,10 @@ const UsersList = () => {
           >
             Add User
           </button> */}
-          <button onClick={() => addUser()} className="btn btn-primary m-2">
+          <button
+            onClick={() => navigate("/addUser")}
+            className="btn btn-primary m-2"
+          >
             Add User
           </button>
         </div>

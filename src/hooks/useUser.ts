@@ -20,7 +20,7 @@ const useUser = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("https://localhost:44379/Admin")
+      .get("https://localhost:44379/Admin/api/getuserlist")
       .then((response: Props1) => {
         setUserList(response.data);
       })
@@ -30,31 +30,18 @@ const useUser = () => {
 
   
 
-  const deleteUser = (user: Props) => {
+  const deleteUser = (id: string) => {
     const originalState = [...userList];
-    setUserList(userList.filter((x) => x.id !== user.id));
+    setUserList(userList.filter((x) => x.id !== id));
     axios
-      .delete("https://jsonplaceholder.typicode.com/users/" + user.id)
+      .delete("https://localhost:44379/Admin/api/deleteuser/" + id)
       .catch((err) => {
         setErrors(err.message);
         setUserList(originalState);
       });
   };
-  const addUser = () => {
-    const newUser: Props = {
-       id: "0",
-       companyID: "0",
-       companyName: "Trivium",
-       userType: "admin",
-       username: "Rashmi",
-       };
-    setUserList([...userList, newUser]);
-    axios
-      .post("https://jsonplaceholder.typicode.com/users", newUser)
-      .then((res) => setUserList([...userList, res.data]));
-  };
 
-  return { userList, error, isLoading, addUser, deleteUser };
+  return { userList, error, isLoading, deleteUser };
 };
 
 export default useUser;

@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import useUser from "../hooks/useUser";
 import { useEffect, useState } from "react";
+import axios, { AxiosResponse } from "axios";
 
 interface Props {
   id: string;
@@ -13,13 +14,20 @@ interface Props {
 const UserDetails = () => {
   let { userId } = useParams();
   const navigate = useNavigate();
-  const { userList, isLoading } = useUser();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setErrors] = useState("");
   const [userData, setUserData] = useState<Props>();
 
   useEffect(() => {
-    const data = userList.filter((item) => item.id == userId);
-    setUserData(data[0]);
-  }, [isLoading]);
+    setIsLoading(true);
+    axios
+      .get(`https://localhost:44379/Admin/api/getuserlist/${userId}`)
+      .then((response: AxiosResponse<Props>) => {
+        setUserData(response.data);
+      })
+      .catch((error) => setErrors(error.message))
+      .finally(() => setIsLoading(false));
+  }, []);
 
   return (
     <>
