@@ -1,32 +1,45 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
 import Alert from "./Alert";
+import axios, { AxiosResponse } from "axios";
+
+interface Props {
+  username: string;
+  password: string;
+}
 
 const Login = () => {
   const navigate = useNavigate();
-  let [uname, setUname] = useState("");
-  let [pwd, setPwd] = useState("");
+  const [loginData, setLoginData] = useState<Props>({
+    username: "",
+    password: "",
+  });
 
-  const doLogin = () => {
-    if (uname === "" || pwd === "") {
+  const submitForm = () => {
+    if (loginData.username === "" || loginData.password === "") {
       alert("username or password can't be blank");
       return;
     }
-    if (uname === "admin" && pwd === "admin") {
-      localStorage.setItem("uname", uname);
-      localStorage.setItem("Isauth", "1");
-      navigate("/dashboard/");
-    } else {
-      ReactDOM.render(
-        <Alert>Login is not successful. Please try again...</Alert>,
-        document.getElementById("root")
-      );
-    }
+    axios
+      .post("https://localhost:44379/Login/api/login", loginData)
+      .then((response: AxiosResponse<number>) => {
+        if (response.data > 0) {
+          localStorage.setItem("Isauth", "1");
+          navigate("/dashboard/");
+        } else {
+          ReactDOM.render(
+            <Alert>Login is not successful. Please try again...</Alert>,
+            document.getElementById("root")
+          );
+        }
+      });
   };
   const handleReset = () => {
-    setUname("");
-    setPwd("");
+    setLoginData({
+      username: "",
+      password: "",
+    });
   };
   return (
     <>
@@ -36,8 +49,10 @@ const Login = () => {
           <input
             type="text"
             id="t1"
-            value={uname}
-            onChange={(e) => setUname(e.target.value)}
+            value={loginData.username}
+            onChange={(e) =>
+              setLoginData({ ...loginData, username: e.target.value })
+            }
           />
         </div>
 
@@ -46,8 +61,10 @@ const Login = () => {
           <input
             type="password"
             id="t2"
-            value={pwd}
-            onChange={(e) => setPwd(e.target.value)}
+            value={loginData.password}
+            onChange={(e) =>
+              setLoginData({ ...loginData, password: e.target.value })
+            }
           />
         </div>
 
@@ -55,7 +72,7 @@ const Login = () => {
           <button
             type="button"
             className="btn btn-primary m-2"
-            onClick={doLogin}
+            onClick={submitForm}
           >
             Login
           </button>
